@@ -1,0 +1,33 @@
+{
+  "name": "@eriklieben/playwright-gherkin",
+  "version": "1.0.0",
+  "description": "Playwright fixtures to write gherkin style e2e tests with Playwright tooling support",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "Playwright",
+    "Gherkin",
+    "BDD",
+    "e2e"
+  ],
+  "author": {
+    "name": "Erik Lieben",
+    "email": "erik.lieben@gmail.com",
+    "url": "https://www.eriklieben.com/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
+  "types": "./dist/index.d.ts",
+  "type": "commonjs",
+  "files": [
+    "dist",
+    "img"
+  ],
+  "dependencies": {
+    "@playwright/test": "^1.34.0"
+  }
+}
