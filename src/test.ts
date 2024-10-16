@@ -54,40 +54,40 @@ function findMethod(POM: PageObjectModel, name: string):Function {
     return func;
 }
 
-export const test = base.extend<Gherkin & usePOM>({
+  export const test = base.extend<Gherkin & usePOM>({
     container: [ { POM: {actions: [], storyline: [], completeStory: () => {} }}, { option: true }],
     Given: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'Given' + getString(strings, args));
-        await func(...args);
+        await base.step('Given' + getString(strings, args, true), func(...args));
         container.POM.storyline.push('Given' + getString(strings, args, true));
       });
     },
     When: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'When' + getString(strings, args));
-        await func(...args);
+        await base.step('When' + getString(strings, args, true), func(...args));
         container.POM.storyline.push('When' + getString(strings, args, true));
       });
     },
     And: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'When' + getString(strings, args));
-        await func(...args);
+        await base.step('And' + getString(strings, args, true), func(...args));
         container.POM.storyline.push('And' + getString(strings, args, true));
       });
     },
     Then: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'Then' + getString(strings, args));
-        await func(...args);
+        await base.step('Then' + getString(strings, args, true), func(...args));
         container.POM.storyline.push('Then' + getString(strings, args, true));
       });
     },
     But: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'Then' + getString(strings, args));
-        await func(...args);
+        await base.step('But' + getString(strings, args, true), func(...args));
         container.POM.storyline.push('But' + getString(strings, args, true));
       });
     }
@@ -125,7 +125,15 @@ export const Feature = (title: string, callback: () => void) => {
   export const Flow = (title: string, callback: () => void) => {
     test.describe('@flow ' + title, callback);
   };
-  
+
+  /**
+   * A11Y / Accessibility
+   * @function a set of tests that cover a user flow
+   */
+  export const A11Y = (title: string, callback: () => void) => {
+    test.describe('@a11y ' + title, callback);
+  };
+
   /**
    * CI
    * @function a set of tests that run within the CI pipeline
