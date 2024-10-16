@@ -17,7 +17,7 @@ Create a Page Object Model and add use either the actions object or the more spe
 `pom/todopage.ts`
 ```typescript
 import { expect, Page, Locator } from '@playwright/test';
-import { PageObjectModel } from '@eriklieben/eriklieben-playwright';
+import { PageObjectModel } from '@eriklieben/playwright-gherkin';
 
 export class TodoPage extends PageObjectModel {
   readonly newTodo: Locator;
@@ -63,7 +63,7 @@ In your tests: `todolist.spec.ts` use `test.beforeEach` to specify your POM (Pag
 And now you can write your test in a syntax somewhat simular to Gherkin.
 
 ```typescript
-import { Feature, Scenario, test} from '@eriklieben/eriklieben-playwright';
+import { Feature, Scenario, test} from '@eriklieben/playwright-gherkin';
 import { TodoPage } from './TodoPage';
 
 test.describe('Empty list can have item added', () => {
@@ -88,7 +88,7 @@ test.describe('Empty list can have item added', () => {
 As an option, you can also use the following syntax, but this breaks the start all test for the `test.describe`/`Feature` in the vscode Playwright test runner plugin.
 
 ```typescript
-import { Feature, Scenario, test} from '@eriklieben/eriklieben-playwright';
+import { Feature, Scenario, test} from '@eriklieben/playwright-gherkin';
 import { TodoPage } from './TodoPage';
 
 Feature('Empty list can have item added', () => {
