@@ -59,35 +59,35 @@ function findMethod(POM: PageObjectModel, name: string):Function {
     Given: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'Given' + getString(strings, args));
-        await base.step('Given' + getString(strings, args, true), func(...args));
+        await base.step('Given' + getString(strings, args, true), async () => await func(...args));
         container.POM.storyline.push('Given' + getString(strings, args, true));
       });
     },
     When: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'When' + getString(strings, args));
-        await base.step('When' + getString(strings, args, true), func(...args));
+        await base.step('When' + getString(strings, args, true), async () => await func(...args));
         container.POM.storyline.push('When' + getString(strings, args, true));
       });
     },
     And: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'When' + getString(strings, args));
-        await base.step('And' + getString(strings, args, true), func(...args));
+        await base.step('And' + getString(strings, args, true), async () => await func(...args));
         container.POM.storyline.push('And' + getString(strings, args, true));
       });
     },
     Then: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'Then' + getString(strings, args));
-        await base.step('Then' + getString(strings, args, true), func(...args));
+        await base.step('Then' + getString(strings, args, true), async () => await func(...args));
         container.POM.storyline.push('Then' + getString(strings, args, true));
       });
     },
     But: async ({ container }, use) => {
       await use(async (strings: TemplateStringsArray, ...args: string[]) => {
         const func = findMethod(container.POM, 'Then' + getString(strings, args));
-        await base.step('But' + getString(strings, args, true), func(...args));
+        await base.step('But' + getString(strings, args, true), async () => await func(...args));
         container.POM.storyline.push('But' + getString(strings, args, true));
       });
     }
@@ -107,7 +107,7 @@ function findMethod(POM: PageObjectModel, name: string):Function {
  * @function a set of tests that cover a specific feature.
  */
 export const Feature = (title: string, callback: () => void) => {
-    test.describe('@feature ' + title, callback);
+    test.describe(title, { tag: '@feature' }, callback);
   };
   
   /**
@@ -115,15 +115,15 @@ export const Feature = (title: string, callback: () => void) => {
    * @function a set of tests to perform a quick and fast check
    */
   export const SmokeTest = (title: string, callback: () => void) => {
-    test.describe('@smoke ' + title, callback);
+    test.describe(title, { tag: '@smoke' }, callback);
   };
   
   /**
    * Flow
    * @function a set of tests that cover a user flow
    */
-  export const Flow = (title: string, callback: () => void) => {
-    test.describe('@flow ' + title, callback);
+  export const UserFlow = (title: string, callback: () => void) => {
+    test.describe(title, { tag: '@userflow' }, callback);
   };
 
   /**
@@ -131,14 +131,13 @@ export const Feature = (title: string, callback: () => void) => {
    * @function a set of tests that cover a user flow
    */
   export const A11Y = (title: string, callback: () => void) => {
-    test.describe('@a11y ' + title, callback);
+    test.describe(title, { tag: '@a11y' }, callback);
   };
-
   /**
    * CI
    * @function a set of tests that run within the CI pipeline
    */
   export const CI = (title: string, callback: () => void) => {
-    test.describe('@ci ' + title, callback);
+    test.describe(title, { tag: '@ci' }, callback);
   };
   
